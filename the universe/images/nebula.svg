@@ -1,0 +1,103 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Nebula gradients -->
+    <radialGradient id="nebulaCore" cx="50%" cy="50%" r="50%" fx="40%" fy="40%">
+      <stop offset="0%" stop-color="#f8c6ff" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#c4a1ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7b68ee" stop-opacity="0.2"/>
+    </radialGradient>
+    
+    <radialGradient id="nebulaOuter" cx="50%" cy="50%" r="50%" fx="60%" fy="60%">
+      <stop offset="0%" stop-color="#ff9e7a" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#ff7eb3" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7579e7" stop-opacity="0.1"/>
+    </radialGradient>
+    
+    <radialGradient id="nebulaGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#ffd6ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#9381ff" stop-opacity="0"/>
+    </radialGradient>
+    
+    <!-- Filters for glow effects -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    
+    <filter id="coloredGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="
+        1 0 0 0 0.2
+        0 1 0 0 0.1
+        0 0 1 0 0.3
+        0 0 0 1 0"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Background cosmic dust -->
+  <rect width="100%" height="100%" fill="#0a0a2a" opacity="0.3"/>
+  
+  <!-- Main nebula clouds -->
+  <g filter="url(#softGlow)">
+    <!-- Central nebula -->
+    <ellipse cx="600" cy="400" rx="300" ry="200" fill="url(#nebulaCore)" opacity="0.8">
+      <animate attributeName="ry" values="200;210;200" dur="15s" repeatCount="indefinite" />
+    </ellipse>
+    
+    <!-- Outer nebula regions -->
+    <path d="M 500,300 Q 650,200 800,300 T 900,500 Q 750,600 600,550 T 400,450 Q 450,350 500,300 Z" 
+          fill="url(#nebulaOuter)" opacity="0.6">
+      <animate attributeName="d" 
+               values="M 500,300 Q 650,200 800,300 T 900,500 Q 750,600 600,550 T 400,450 Q 450,350 500,300 Z;
+                       M 510,310 Q 660,210 810,310 T 910,510 Q 760,610 610,560 T 410,460 Q 460,360 510,310 Z;
+                       M 500,300 Q 650,200 800,300 T 900,500 Q 750,600 600,550 T 400,450 Q 450,350 500,300 Z" 
+               dur="20s" 
+               repeatCount="indefinite" />
+    </path>
+    
+    <!-- Nebula tendrils -->
+    <path d="M 600,400 Q 700,350 750,450 T 850,500 Q 800,550 700,500 T 600,400" 
+          fill="url(#nebulaGlow)" opacity="0.5">
+      <animate attributeName="d" 
+               values="M 600,400 Q 700,350 750,450 T 850,500 Q 800,550 700,500 T 600,400;
+                       M 600,400 Q 710,360 760,460 T 860,510 Q 810,560 710,510 T 600,400;
+                       M 600,400 Q 700,350 750,450 T 850,500 Q 800,550 700,500 T 600,400" 
+               dur="25s" 
+               repeatCount="indefinite" />
+    </path>
+    
+    <path d="M 600,400 Q 500,350 450,450 T 350,500 Q 400,550 500,500 T 600,400" 
+          fill="url(#nebulaGlow)" opacity="0.5">
+      <animate attributeName="d" 
+               values="M 600,400 Q 500,350 450,450 T 350,500 Q 400,550 500,500 T 600,400;
+                       M 600,400 Q 490,340 440,440 T 340,490 Q 390,540 490,490 T 600,400;
+                       M 600,400 Q 500,350 450,450 T 350,500 Q 400,550 500,500 T 600,400" 
+               dur="22s" 
+               repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Bright nebula stars -->
+  <g filter="url(#coloredGlow)">
+    <circle cx="550" cy="350" r="3" fill="white" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.6;0.9" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="650" cy="450" r="2.5" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.5;0.8" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="750" cy="380" r="3.5" fill="white" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.7;0.9" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="480" cy="420" r="2" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.6;0.8" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="600" cy="500" r="3" fill="white" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="5.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

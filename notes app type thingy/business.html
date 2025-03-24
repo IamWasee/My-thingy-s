@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Impact & Ethics - Edexcel IGCSE Business</title>
+    <style>
+        :root {
+            --primary-color: #FF7F00;
+            --primary-light: #FFB366;
+            --primary-dark: #CC6600;
+            --accent: #FFEDCC;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --section-bg: #FFF1E0;
+            --eco-green: #4CAF50;
+            --eco-light: #C8E6C9;
+            --ethics-purple: #9C27B0;
+            --ethics-light: #E1BEE7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #FFFAF5;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 2.5rem;
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .environment-section {
+            border-left: 4px solid var(--eco-green);
+        }
+        
+        .environment-section h2 {
+            color: var(--eco-green);
+            border-bottom: 2px solid var(--eco-light);
+        }
+        
+        .ethics-section {
+            border-left: 4px solid var(--ethics-purple);
+        }
+        
+        .ethics-section h2 {
+            color: var(--ethics-purple);
+            border-bottom: 2px solid var(--ethics-light);
+        }
+        
+        h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        h3 {
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        .environment-section h3 {
+            color: var(--eco-green);
+        }
+        
+        .ethics-section h3 {
+            color: var(--ethics-purple);
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        
+        .highlight-eco {
+            font-weight: bold;
+            color: var(--eco-green);
+        }
+        
+        .highlight-ethics {
+            font-weight: bold;
+            color: var(--ethics-purple);
+        }
+        
+        .qa-section {
+            background-color: var(--accent);
+        }
+        
+        .qa-eco {
+            background-color: var(--eco-light);
+        }
+        
+        .qa-ethics {
+            background-color: var(--ethics-light);
+        }
+        
+        .qa-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--primary-light);
+        }
+        
+        .qa-eco .qa-item {
+            border-bottom: 1px solid var(--eco-green);
+        }
+        
+        .qa-ethics .qa-item {
+            border-bottom: 1px solid var(--ethics-purple);
+        }
+        
+        .qa-item:last-child {
+            border-bottom: none;
+        }
+        
+        .question {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .qa-eco .question {
+            color: var(--eco-green);
+        }
+        
+        .qa-ethics .question {
+            color: var(--ethics-purple);
+        }
+        
+        .answer {
+            padding-left: 1rem;
+        }
+        
+        .mcq-options {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mcq-option {
+            margin-bottom: 0.5rem;
+        }
+        
+        .correct-answer {
+            font-weight: bold;
+            color: var(--eco-green);
+        }
+        
+        .correct-icon {
+            color: var(--eco-green);
+            margin-left: 0.5rem;
+        }
+        
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-button {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Environmental Impact & Ethics</h1>
+        <div class="subtitle">Edexcel IGCSE Business Studies</div>
+    </header>
+    
+    <div class="container">
+        <div class="chapter-nav">
+            <a href="businessprom.html" class="nav-button">← Previous Chapter: Promotion</a>
+        </div>
+        
+        <!-- Chapter 40: The Impact of Business Activity on the Environment -->
+        <section class="environment-section">
+            <h2>Chapter 40: The Impact of Business Activity on the Environment</h2>
+            <p>This chapter explores how business activities affect the environment and what measures can be taken to minimize negative impacts.</p>
+        </section>
+        
+        <section class="environment-section">
+            <h2>1. Environmental Problems Caused by Businesses</h2>
+            <ul>
+                <li><span class="highlight-eco">Pollution:</span> Businesses contribute to air, water, and land pollution through manufacturing processes, waste disposal, and transportation.</li>
+                <li><span class="highlight-eco">Deforestation:</span> Businesses may destroy forests for raw materials or space for development.</li>
+                <li><span class="highlight-eco">Resource Depletion:</span> Excessive use of non-renewable resources (e.g., oil, gas) by businesses can lead to scarcity.</li>
+                <li><span class="highlight-eco">Waste Management Issues:</span> Improper disposal of industrial waste harms the environment and ecosystems.</li>
+            </ul>
+        </section>
+        
+        <section class="environment-section">
+            <h2>2. Sustainable Development</h2>
+            <p>Businesses need to balance economic growth with environmental protection to ensure resources are available for future generations.</p>
+            <h3>Sustainable Business Practices:</h3>
+            <ul>
+                <li>Use of renewable energy sources (solar, wind, hydroelectric)</li>
+                <li>Reduction of waste through recycling and repurposing</li>
+                <li>Implementation of energy-efficient production methods</li>
+                <li>Sustainable sourcing of raw materials</li>
+            </ul>
+        </section>
+        
+        <section class="environment-section">
+            <h2>3. Government Regulations</h2>
+            <p>Governments enforce environmental laws to control business impact on the environment.</p>
+            <h3>Types of Environmental Regulations:</h3>
+            <ul>
+                <li>Fines and penalties for pollution violations</li>
+                <li>Limits on carbon emissions and greenhouse gases</li>
+                <li>Requirements for environmental impact assessments</li>
+                <li>Incentives and subsidies for green energy use</li>
+                <li>Mandatory recycling and waste management programs</li>
+            </ul>
+        </section>
+        
+        <section class="environment-section">
+            <h2>4. Corporate Social Responsibility (CSR)</h2>
+            <p>Companies voluntarily adopt eco-friendly policies as part of their corporate social responsibility.</p>
+            <h3>Examples of Environmental CSR:</h3>
+            <ul>
+                <li>Using biodegradable packaging materials</li>
+                <li>Implementing water conservation measures</li>
+                <li>Reducing energy consumption in operations</li>
+                <li>Setting carbon neutrality goals</li>
+                <li>Investing in reforestation projects</li>
+            </ul>
+        </section>
+        
+        <section class="qa-section qa-eco environment-section">
+            <h2>Chapter 40: Review Questions</h2>
+            
+            <h3>Multiple-Choice Questions (MCQs)</h3>
+            
+            <div class="qa-item">
+                <div class="question">1. Which of the following is an example of a renewable resource?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(A) Coal</div>
+                    <div class="mcq-option">(B) Oil</div>
+                    <div class="mcq-option correct-answer">(C) Solar energy <span class="correct-icon">✅</span></div>
+                    <div class="mcq-option">(D) Natural gas</div>
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="question">2. What is one way businesses can reduce their environmental impact?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(A) Increase waste production</div>
+                    <div class="mcq-option correct-answer">(B) Use energy-efficient machinery <span class="correct-icon">✅</span></div>
+                    <div class="mcq-option">(C) Extract more raw materials</div>
+                    <div class="mcq-option">(D) Ignore government regulations</div>
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="question">3. Which of the following is NOT a negative environmental impact of business activities?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(A) Deforestation</div>
+                    <div class="mcq-option correct-answer">(B) Increased biodiversity <span class="correct-icon">✅</span></div>
+                    <div class="mcq-option">(C) Pollution</div>
+                    <div class="mcq-option">(D) Resource depletion</div>
+                </div>
+            </div>
+            
+            <h3>Chapter Questions</h3>
+            
+            <div class="qa-item">
+                <div class="question">1. Explain two ways businesses can reduce pollution.</div>
+                <div class="answer">
+                    <p><strong>Using renewable energy:</strong> Businesses can switch to solar, wind, or hydropower to reduce emissions from fossil fuels.</p>
+                    <p><strong>Recycling and waste management:</strong> Proper disposal of waste and recycling materials reduce environmental damage and minimize landfill usage.</p>
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="question">2. Discuss the role of government regulations in controlling business impact on the environment.</div>
+                <div class="answer">
+                    <p>Governments enforce laws such as emission limits and fines for pollution, which create financial incentives for businesses to adopt environmentally friendly practices.</p>
+                    <p>They also provide incentives for green energy use and sustainable practices through subsidies and tax breaks, encouraging businesses to invest in environmental protection.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Chapter 41: Ethical Issues in Business -->
+        <section class="ethics-section">
+            <h2>Chapter 41: Ethical Issues in Business</h2>
+            <p>This chapter explores ethical considerations in business operations and decision-making processes.</p>
+        </section>
+        
+        <section class="ethics-section">
+            <h2>1. What is Business Ethics?</h2>
+            <p>Ethics in business means acting responsibly towards employees, customers, and society as a whole.</p>
+            <h3>Examples of Ethical Business Practices:</h3>
+            <ul>
+                <li>Fair treatment of workers and providing safe working conditions</li>
+                <li>Honest advertising and transparent business practices</li>
+                <li>Avoiding production of harmful products</li>
+                <li>Respecting customer privacy and data protection</li>
+                <li>Considering environmental impact in business decisions</li>
+            </ul>
+        </section>
+        
+        <section class="ethics-section">
+            <h2>2. Ethical Conflicts</h2>
+            <p>Sometimes, businesses face conflicts between making a profit and doing what is ethically right.</p>
+            <h3>Examples of Ethical Dilemmas:</h3>
+            <ul>
+                <li>Exploiting cheap labor to cut costs versus ensuring fair wages</li>
+                <li>Using environmentally harmful but cheaper materials versus eco-friendly alternatives</li>
+                <li>Selling products with planned obsolescence versus durable goods</li>
+                <li>Prioritizing shareholder profits versus stakeholder welfare</li>
+            </ul>
+        </section>
+        
+        <section class="ethics-section">
+            <h2>3. Ethical Sourcing & Fair Trade</h2>
+            <ul>
+                <li><span class="highlight-ethics">Ethical sourcing:</span> Ensuring that materials and products are obtained in a responsible and sustainable manner with consideration for workers' rights and environmental impact.</li>
+                <li><span class="highlight-ethics">Fair trade:</span> Ensuring fair wages and working conditions for suppliers in developing countries through certification programs and direct partnerships.</li>
+            </ul>
+            <h3>Benefits of Ethical Sourcing:</h3>
+            <ul>
+                <li>Improved brand reputation and customer loyalty</li>
+                <li>Reduced risk of supply chain disruptions</li>
+                <li>Compliance with international standards and regulations</li>
+                <li>Contribution to sustainable development goals</li>
+            </ul>
+        </section>
+        
+        <section class="ethics-section">
+            <h2>4. Government Influence</h2>
+            <p>Governments regulate unethical business practices through legislation and enforcement.</p>
+            <h3>Examples of Ethical Regulations:</h3>
+            <ul>
+                <li>Laws against false advertising and deceptive marketing</li>
+                <li>Bans on harmful products and dangerous chemicals</li>
+                <li>Minimum wage laws and working hour restrictions</li>
+                <li>Anti-discrimination legislation</li>
+                <li>Consumer protection laws</li>
+            </ul>
+        </section>
+        
+        <section class="qa-section qa-ethics ethics-section">
+            <h2>Chapter 41: Review Questions</h2>
+            
+            <h3>Multiple-Choice Questions (MCQs)</h3>
+            
+            <div class="qa-item">
+                <div class="question">1. Which of the following is an example of an ethical business practice?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(A) Paying workers below minimum wage</div>
+                    <div class="mcq-option correct-answer">(B) Providing safe working conditions <span class="correct-icon">✅</span></div>
+                    <div class="mcq-option">(C) False advertising</div>
+                    <div class="mcq-option">(D) Using child labor</div>
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="question">2. Why do businesses adopt ethical practices?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(A) To maximize short-term profits</div>
+                    <div class="mcq-option correct-answer">(B) To improve brand reputation and customer trust <span class="correct-icon">✅</span></div>
+                    <div class="mcq-option">(C) To exploit workers legally</div>
+                    <div class="mcq-option">(D) To avoid innovation</div>
+                </div>
+            </div>
+            
+            <h3>Chapter Questions</h3>
+            
+            <div class="qa-item">
+                <div class="question">1. Describe two ethical concerns businesses face.</div>
+                <div class="answer">
+                    <p><strong>Fair wages:</strong> Businesses must ensure employees are paid fairly for their work, which may involve paying above minimum wage and considering living wage standards.</p>
+                    <p><strong>Honest advertising:</strong> Companies should not deceive consumers with false claims about their products or services. This includes transparency about ingredients, product origins, and realistic performance claims.</p>
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="question">2. Explain how ethical behavior can benefit a business.</div>
+                <div class="answer">
+                    <p>Ethical businesses attract loyal customers who share their values and investors who seek responsible companies. This can lead to sustained growth and profitability.</p>
+                    <p>They also avoid legal issues, fines, and reputational damage that can arise from unethical practices, contributing to long-term success and stability.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>Edexcel IGCSE Business Studies | Environmental Impact & Ethics</p>
+    </footer>
+</body>
+</html>

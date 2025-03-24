@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="nav-logo">
+        </div>
+        <div class="navbar-nav">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">TV Shows</a>
+            <a href="#" class="nav-link">Movies</a>
+            <a href="#" class="nav-link">New & Popular</a>
+            <a href="#" class="nav-link">My List</a>
+        </div>
+        <div class="navbar-right">
+            <i class="fas fa-search nav-icon"></i>
+            <i class="fas fa-bell nav-icon"></i>
+            <img src="https://occ-0-1723-92.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229" alt="Avatar" class="nav-avatar">
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Money Heist</h1>
+            <p class="hero-description">A criminal mastermind who goes by "The Professor" has a plan to pull off the biggest heist in recorded history -- to print billions of euros in the Royal Mint of Spain.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-play"><i class="fas fa-play"></i> Play</button>
+                <button class="btn btn-more"><i class="fas fa-info-circle"></i> More Info</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="movie-section">
+            <h2 class="section-title">Trending Now</h2>
+            <div class="movie-row">
+                <!-- Movie cards will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="movie-section">
+            <h2 class="section-title">Popular on Netflix</h2>
+            <div class="movie-row">
+                <!-- Movie cards will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="movie-section">
+            <h2 class="section-title">Continue Watching</h2>
+            <div class="movie-row">
+                <!-- Movie cards will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

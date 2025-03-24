@@ -1,0 +1,397 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif', serif;
+    overflow: hidden;
+    background: #0a0a2a; /* Deep space blue */
+    color: #fff;
+    height: 100vh;
+    width: 100vw;
+}
+
+.universe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+/* Parallax Background Layers */
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+}
+
+.background-stars {
+    background: url('../images/stars.svg') repeat;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.background-nebula {
+    background: url('../images/nebula.svg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.6;
+    z-index: 2;
+}
+
+/* Floating Islands */
+.floating-islands {
+    z-index: 3;
+}
+
+.island {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    will-change: transform;
+    animation: float 15s infinite ease-in-out;
+}
+
+.island-1 {
+    background-image: url('../images/island1.svg');
+    width: 300px;
+    height: 200px;
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.island-2 {
+    background-image: url('../images/island2.svg');
+    width: 250px;
+    height: 180px;
+    top: 60%;
+    left: 70%;
+    animation-delay: -5s;
+}
+
+.island-3 {
+    background-image: url('../images/island3.svg');
+    width: 350px;
+    height: 220px;
+    top: 40%;
+    left: 40%;
+    animation-delay: -10s;
+}
+
+/* Celestial Beings */
+.celestial-beings {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+.entity {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.entity:hover {
+    transform: scale(1.1);
+}
+
+.entity-body {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    will-change: transform;
+}
+
+.entity-info {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    width: 200px;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.entity:hover .entity-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Individual Celestial Beings Styling */
+.forest-spirit {
+    width: 120px;
+    height: 150px;
+    top: 30%;
+    left: 20%;
+}
+
+.forest-spirit .entity-body {
+    background-image: url('../images/forest-spirit.svg');
+    animation: glow 4s infinite alternate, float 8s infinite ease-in-out;
+}
+
+.sky-dragon {
+    width: 200px;
+    height: 100px;
+    top: 15%;
+    left: 60%;
+}
+
+.sky-dragon .entity-body {
+    background-image: url('../images/sky-dragon.svg');
+    animation: flow 20s infinite linear, float 12s infinite ease-in-out;
+}
+
+.star-keeper {
+    width: 100px;
+    height: 130px;
+    top: 70%;
+    left: 30%;
+}
+
+.star-keeper .entity-body {
+    background-image: url('../images/star-keeper.svg');
+    animation: twinkle 3s infinite alternate, float 10s infinite ease-in-out;
+}
+
+.cloud-child {
+    width: 90px;
+    height: 110px;
+    top: 50%;
+    left: 75%;
+}
+
+.cloud-child .entity-body {
+    background-image: url('../images/cloud-child.svg');
+    animation: drift 15s infinite linear, float 7s infinite ease-in-out;
+}
+
+.moon-goddess {
+    width: 130px;
+    height: 160px;
+    top: 25%;
+    left: 40%;
+}
+
+.moon-goddess .entity-body {
+    background-image: url('../images/moon-goddess.svg');
+    animation: pulse 5s infinite alternate, float 9s infinite ease-in-out;
+}
+
+/* Navigation */
+.navigation {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+/* Welcome Message */
+.welcome-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+.welcome-message h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #f8e9d2; /* Warm Ghibli-inspired color */
+}
+
+.welcome-message p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #e6ccb2; /* Soft warm color */
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes glow {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(144, 238, 144, 0.5));
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(144, 238, 144, 0.8));
+    }
+}
+
+@keyframes flow {
+    0% {
+        transform: rotate(0deg) scaleX(1);
+    }
+    25% {
+        transform: rotate(2deg) scaleX(1.05);
+    }
+    50% {
+        transform: rotate(0deg) scaleX(1);
+    }
+    75% {
+        transform: rotate(-2deg) scaleX(0.95);
+    }
+    100% {
+        transform: rotate(0deg) scaleX(1);
+    }
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.7;
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    }
+    100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+    }
+}
+
+@keyframes drift {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+    50% {
+        transform: translateX(30px) scale(1.1);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        filter: brightness(0.8) drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+    100% {
+        filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-message {
+        padding: 20px;
+        max-width: 90%;
+    }
+    
+    .welcome-message h1 {
+        font-size: 1.8rem;
+    }
+    
+    .welcome-message p {
+        font-size: 1rem;
+    }
+    
+    .island-1 {
+        width: 200px;
+        height: 140px;
+    }
+    
+    .island-2 {
+        width: 180px;
+        height: 120px;
+    }
+    
+    .island-3 {
+        width: 220px;
+        height: 150px;
+    }
+    
+    .entity {
+        transform: scale(0.8);
+    }
+    
+    .entity:hover {
+        transform: scale(0.9);
+    }
+    
+    .entity-info {
+        width: 180px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-message h1 {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-message p {
+        font-size: 0.9rem;
+    }
+    
+    .island-1, .island-2, .island-3 {
+        transform: scale(0.7);
+    }
+    
+    .entity {
+        transform: scale(0.7);
+    }
+    
+    .entity:hover {
+        transform: scale(0.8);
+    }
+    
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}

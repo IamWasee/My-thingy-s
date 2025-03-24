@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolNotes Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    nav {
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem;
+    }
+    
+    .nav-links a:hover {
+      background-color: #34495e;
+      border-radius: 5px;
+    }
+    
+    .hero {
+      height: 50vh;
+      background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('/api/placeholder/1200/600');
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 2rem;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+    }
+    
+    .cta-button {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .cta-button:hover {
+      background-color: #c0392b;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #2c3e50;
+    }
+    
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .subject-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    
+    .subject-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .subject-img {
+      height: 150px;
+      background-color: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.5rem;
+    }
+    
+    .subject-content {
+      padding: 1.5rem;
+    }
+    
+    .subject-content h3 {
+      margin-bottom: 0.5rem;
+    }
+    
+    .subject-content p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .view-notes {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #2c3e50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+    
+    .view-notes:hover {
+      background-color: #34495e;
+    }
+    
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .subject-page, .sub-subject-page {
+      display: none;
+    }
+    
+    .subject-page.active, .sub-subject-page.active {
+      display: block;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #2c3e50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    
+    .notes-list {
+      background-color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .note-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .note-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .note-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .note-date {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    .note-content {
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    /* Different colors for subjects */
+    .math .subject-img { background-color: #e74c3c; }
+    .science .subject-img { background-color: #27ae60; }
+    .history .subject-img { background-color: #f39c12; }
+    .english .subject-img { background-color: #9b59b6; }
+    .computer .subject-img { background-color: #3498db; }
+    .art .subject-img { background-color: #e67e22; }
+    .commerce .subject-img { background-color: #16a085; }
+    
+    /* Sub-subject cards */
+    .sub-subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .sub-subject-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sub-subject-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .sub-subject-header {
+      padding: 1.5rem;
+      background-color: #e74c3c;
+      color: white;
+      text-align: center;
+    }
+    
+    .sub-subject-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sub-subject-content p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    
+    /* Path navigation */
+    .path-nav {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .path-nav span {
+      color: #666;
+    }
+    
+    .path-nav a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+    
+    .path-separator {
+      margin: 0 0.5rem;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .subjects-grid, .sub-subjects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SchoolNotes Hub</div>
+    <div class="nav-links">
+      <a href="#" onclick="showHome()">Home</a>
+      <a href="#explore" onclick="showExplore()">Explore</a>
+      <a href="#" onclick="alert('Coming soon!')">Upload Notes</a>
+      <a href="#" onclick="alert('Coming soon!')">About Us</a>
+    </div>
+  </nav>
+  
+  <!-- Home Page -->
+  <div id="home-page">
+    <div class="hero">
+      <h1>Welcome to SchoolNotes Hub</h1>
+      <p>Your one-stop destination for all class notes. Study smarter, not harder with notes shared by students and teachers.</p>
+      <button class="cta-button" onclick="showExplore()">Explore Notes</button>
+    </div>
+    
+    <div class="container">
+      <h2 class="section-title">Popular Subjects</h2>
+      <div class="subjects-grid">
+        <div class="subject-card math" onclick="showSubject('math')">
+          <div class="subject-img">π</div>
+          <div class="subject-content">
+            <h3>Mathematics</h3>
+            <p>Algebra, Calculus, Geometry, and more</p>
+            <a href="#" class="view-notes">View Notes</a>
+          </div>
+        </div>
+        
+        <div class="subject-card science" onclick="showSubject('science')">
+          <div class="subject-img">⚗️</div>
+          <div class="subject-content">
+            <h3>Science</h3>
+            <p>Physics, Chemistry, Biology, and more</p>
+            <a href="#" class="view-notes">View Notes</a>
+          </div>
+        </div>
+        
+        <div class="subject-card history" onclick="showSubject('history')">
+          <div class="subject-img">📜</div>
+          <div class="subject-content">
+            <h3>History</h3>
+            <p>World History, National History, and more</p>
+            <a href="#" class="view-notes">View Notes</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-section" style="text-align: center; margin-top: 3rem;">
+        <h2>Can't find what you're looking for?</h2>
+        <p style="margin: 1rem 0;">Check out our complete collection of subjects and notes</p>
+        <button class="cta-button" onclick="showExplore()">Explore All Subjects</button>
+      </div>
+    </div>
+  </div>
+  
+<!-- Explore Page -->
+<div id="explore-page" style="display: none;">
+  <div class="container">
+    <h2 class="section-title">Explore Subjects</h2>
+    <div class="subjects-grid">
+      <div class="subject-card math" onclick="showSubject('math')">
+        <div class="subject-img">π</div>
+        <div class="subject-content">
+          <h3>Mathematics</h3>
+          <p>Algebra, Calculus, Geometry, and more</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <div class="subject-card science" onclick="showSubject('science')">
+        <div class="subject-img">⚗️</div>
+        <div class="subject-content">
+          <h3>Science</h3>
+          <p>Physics, Chemistry, Biology, and more</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <div class="subject-card history" onclick="showSubject('history')">
+        <div class="subject-img">📜</div>
+        <div class="subject-content">
+          <h3>History</h3>
+          <p>World History, National History, and more</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <div class="subject-card english" onclick="showSubject('english')">
+        <div class="subject-img">📚</div>
+        <div class="subject-content">
+          <h3>English</h3>
+          <p>Literature, Grammar, Writing Skills</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <div class="subject-card computer" onclick="showSubject('computer')">
+        <div class="subject-img">💻</div>
+        <div class="subject-content">
+          <h3>Computer Science</h3>
+          <p>Programming, Algorithms, Web Development</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <div class="subject-card art" onclick="showSubject('art')">
+        <div class="subject-img">🎨</div>
+        <div class="subject-content">
+          <h3>Art & Design</h3>
+          <p>Drawing, Painting, Design Principles</p>
+          <a href="#" class="view-notes">View Notes</a>
+        </div>
+      </div>
+      
+      <!-- Add Commerce Card Here -->
+      <div class="subject-card commerce" onclick="showSubject('commerce')">
+        <div class="subject-img">📊</div>
+        <div class="subject-content">
+          <h3>Commerce</h3>
+          <p>Business, Economics, Accounting, and Financial Systems</p>
+          <a href="#" class="view-notes">View Subjects</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Math Subject Selection Page -->
+  <div id="math-page" class="subject-page">
+    <div class="container">
+      <div class="path-nav">
+        <a href="#" onclick="showExplore()">Explore</a>
+        <span class="path-separator">›</span>
+        <span>Mathematics</span>
+      </div>
+      <h2 class="section-title">Mathematics</h2>
+      <p>Please select a mathematics course:</p>
+      
+      <div class="sub-subjects-grid">
+        <div class="sub-subject-card" onclick="showSubSubject('mathb')">
+          <div class="sub-subject-header">
+            <h3>Mathematics B</h3>
+          </div>
+          <div class="sub-subject-content">
+            <p>Core mathematical concepts and applications. Suitable for most students.</p>
+            <a href="#" class="view-notes">View Chapters</a>
+          </div>
+        </div>
+        
+        <div class="sub-subject-card" onclick="showSubSubject('further')">
+          <div class="sub-subject-header">
+            <h3>Further Pure Mathematics</h3>
+          </div>
+          <div class="sub-subject-content">
+            <p>Advanced mathematical concepts. Suitable for students pursuing mathematics, physics, or engineering at university level.</p>
+            <a href="#" class="view-notes">View Chapters</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Math B Page -->
+<div id="mathb-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('math')">Mathematics</a>
+      <span class="path-separator">›</span>
+      <span>Mathematics B</span>
+    </div>
+    <h2 class="section-title">Mathematics B</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Numbers and the Number System</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Numbers are the foundation of mathematics. Explore different types of numbers, including integers, fractions, and decimals, and understand their relationships.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Algebra</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          From simplifying expressions to solving equations, algebra provides a structured way to work with unknowns and patterns in mathematics.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Mensuration</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Measure the world around you! Learn about the properties of 2D and 3D shapes, areas, volumes, and surface areas of various geometrical figures.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Geometry</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand the properties of angles, triangles, circles, and polygons. Geometry helps explain the structure of the physical world around us.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: Trigonometry</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Trigonometry bridges algebra and geometry. Learn how sine, cosine, and tangent help in solving problems related to angles and distances.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Vectors and Transformation Geometry</h3>
+          <span class="note-date">Updated: March 3, 2025</span>
+        </div>
+        <p class="note-content">
+          Vectors describe movement and direction, while transformation geometry explores how shapes change through translation, rotation, reflection, and enlargement.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Graphs</h3>
+          <span class="note-date">Updated: March 1, 2025</span>
+        </div>
+        <p class="note-content">
+          Graphs visually represent mathematical relationships, helping you interpret patterns, trends, and functions with ease.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Probability and Statistics</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Mathematics isn't just about certainty; it also deals with chance and data. Learn how to analyze trends and predict outcomes through probability and statistics.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Further Pure Mathematics Page -->
+<div id="further-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('math')">Mathematics</a>
+      <span class="path-separator">›</span>
+      <span>Further Pure Mathematics</span>
+    </div>
+    <h2 class="section-title">Further Pure Mathematics</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Algebra</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Strengthen your foundation in algebraic expressions, equations, and inequalities to build problem-solving skills essential for advanced mathematics.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Functions and Graphs</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Discover the power of functions and how graphs can visually represent mathematical relationships and transformations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Geometry</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore the properties of shapes, angles, and spatial reasoning to master the fundamentals of geometric problem-solving.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Trigonometry</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          Unravel the mysteries of sine, cosine, and tangent as you learn how to solve real-world problems involving angles and distances.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: Vectors and Matrices</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand how vectors and matrices can be used to model and solve problems in physics, engineering, and computer graphics.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Differentiation</h3>
+          <span class="note-date">Updated: March 3, 2025</span>
+        </div>
+        <p class="note-content">
+          Enter the world of calculus by exploring how rates of change and slopes of curves can be analyzed using differentiation.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Integration</h3>
+          <span class="note-date">Updated: March 1, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn how to find areas under curves and solve complex mathematical problems with the fundamental techniques of integration.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Probability and Statistics</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Master the art of predicting outcomes and analyzing data with probability and statistical methods used in everyday decision-making.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Science Subject Selection Page -->
+  <div id="science-page" class="subject-page">
+    <div class="container">
+      <div class="path-nav">
+        <a href="#" onclick="showExplore()">Explore</a>
+        <span class="path-separator">›</span>
+        <span>Science</span>
+      </div>
+      <h2 class="section-title">Science</h2>
+      <p>Please select a science subject:</p>
+      
+      <div class="sub-subjects-grid">
+        <div class="sub-subject-card" onclick="showSubSubject('physics')">
+          <div class="sub-subject-header" style="background-color: #3498db;">
+            <h3>Physics</h3>
+          </div>
+          <div class="sub-subject-content">
+            <p>The study of matter, energy, and the fundamental forces of nature.</p>
+            <a href="#" class="view-notes">View Chapters</a>
+          </div>
+        </div>
+        
+        <div class="sub-subject-card" onclick="showSubSubject('chemistry')">
+          <div class="sub-subject-header" style="background-color: #9b59b6;">
+            <h3>Chemistry</h3>
+          </div>
+          <div class="sub-subject-content">
+            <p>The study of matter, its properties, composition, and the changes it undergoes.</p>
+            <a href="#" class="view-notes">View Chapters</a>
+          </div>
+        </div>
+        
+        <div class="sub-subject-card" onclick="showSubSubject('biology')">
+          <div class="sub-subject-header" style="background-color: #27ae60;">
+            <h3>Biology</h3>
+          </div>
+          <div class="sub-subject-content">
+            <p>The study of living organisms and their interactions with each other and the environment.</p>
+            <a href="#" class="view-notes">View Chapters</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Physics Page -->
+<div id="physics-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('science')">Science</a>
+      <span class="path-separator">›</span>
+      <span>Physics</span>
+    </div>
+    <h2 class="section-title">Physics</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Movement and Position</h3>
+          <span class="note-date">Updated: March 18, 2025</span>
+        </div>
+        <p class="note-content">
+          Understanding motion is the first step in mastering physics. Learn about speed, velocity, and acceleration—essential concepts that describe how objects move through space.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Forces and Shape</h3>
+          <span class="note-date">Updated: March 16, 2025</span>
+        </div>
+        <p class="note-content">
+          Forces are everywhere! They can change an object's shape, size, or motion. Explore how different forces act and how materials respond to these changes.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Forces and Movement</h3>
+          <span class="note-date">Updated: March 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Why do objects start, stop, or change direction? This chapter dives into Newton's Laws of Motion and how they govern everything from cars to falling apples.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Momentum</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Momentum keeps things moving—even in collisions. Discover how momentum is conserved and why it plays a key role in everything from sports to car crashes.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: The Turning Effect of Forces</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Ever wondered how levers and gears work? This chapter explains the mechanics of turning forces and moments, helping you understand seesaws, wrenches, and more!
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Magnetism and Electromagnetism</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          From compasses to MRI machines, magnetism is a powerful force in physics. Learn how electromagnets work and how they are used in everyday technology.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Electricity</h3>
+          <span class="note-date">Updated: March 6, 2025</span>
+        </div>
+        <p class="note-content">
+          Powering everything from your phone to the city, electricity is essential. Explore circuits, voltage, and current to understand how we control electrical energy.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Waves</h3>
+          <span class="note-date">Updated: March 4, 2025</span>
+        </div>
+        <p class="note-content">
+          Light, sound, and water waves all follow the same principles. This chapter uncovers how waves move, reflect, and interact with the world around us.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 9: Energy Transfers</h3>
+          <span class="note-date">Updated: March 2, 2025</span>
+        </div>
+        <p class="note-content">
+          Energy is never lost—only transferred. Learn about heat, work, and efficiency to see how energy moves and changes forms in different systems.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 10: Solids, Liquids, and Gases</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Matter exists in different states, each with unique properties. Find out how particles behave in solids, liquids, and gases and what happens during changes of state.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 11: Radioactivity and Particles</h3>
+          <span class="note-date">Updated: February 25, 2025</span>
+        </div>
+        <p class="note-content">
+          Atoms aren't as stable as they seem. Dive into the mysterious world of radioactivity, nuclear fission, and the tiny particles that make up everything.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 12: Astrophysics</h3>
+          <span class="note-date">Updated: February 22, 2025</span>
+        </div>
+        <p class="note-content">
+          From planets to black holes, astrophysics explores the vast universe. Discover how gravity, light, and motion shape our cosmic surroundings.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Chemistry Page -->
+  <div id="chemistry-page" class="sub-subject-page">
+    <div class="container">
+      <div class="path-nav">
+        <a href="#" onclick="showExplore()">Explore</a>
+        <span class="path-separator">›</span>
+        <a href="#" onclick="showSubject('science')">Science</a>
+        <span class="path-separator">›</span>
+        <span>Chemistry</span>
+      </div>
+      <h2 class="section-title">Chemistry</h2>
+      <div class="notes-list">
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 1: Atomic Structure and Periodic Table</h3>
+            <span class="note-date">Updated: March 15, 2025</span>
+          </div>
+          <p class="note-content">
+            Comprehensive notes on atomic models, electron configuration, and periodic trends.
+            Includes diagrams and example problems.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 2: Chemical Bonding</h3>
+            <span class="note-date">Updated: March 10, 2025</span>
+          </div>
+          <p class="note-content">
+            Detailed explanations of ionic, covalent, and metallic bonding. Includes Lewis structures,
+            VSEPR theory, and molecular orbital theory.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 3: Organic Chemistry</h3>
+            <span class="note-date">Updated: March 5, 2025</span>
+          </div>
+          <p class="note-content">
+            Comprehensive coverage of functional groups, reactions, mechanisms, and synthesis strategies.
+            Includes structural formulas and reaction pathways.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 4: Thermodynamics and Kinetics</h3>
+            <span class="note-date">Updated: February 28, 2025</span>
+          </div>
+          <p class="note-content">
+            In-depth notes on enthalpy, entropy, free energy, reaction rates, and equilibrium.
+            Includes energy diagrams and calculations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Biology Page -->
+  <div id="biology-page" class="sub-subject-page">
+    <div class="container">
+      <div class="path-nav">
+        <a href="#" onclick="showExplore()">Explore</a>
+        <span class="path-separator">›</span>
+        <a href="#" onclick="showSubject('science')">Science</a>
+        <span class="path-separator">›</span>
+        <span>Biology</span>
+      </div>
+      <h2 class="section-title">Biology</h2>
+      <div class="notes-list">
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 1: Cell Biology</h3>
+            <span class="note-date">Updated: March 15, 2025</span>
+          </div>
+          <p class="note-content">
+            Comprehensive notes on cell structure, function, cell division, and cellular processes.
+            Includes diagrams of cell organelles and comparison of prokaryotic and eukaryotic cells.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 2: Genetics and Molecular Biology</h3>
+            <span class="note-date">Updated: March 10, 2025</span>
+          </div>
+          <p class="note-content">
+            Detailed explanations of DNA structure, replication, transcription, translation, and gene regulation.
+            Includes inheritance patterns and genetic disorders.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 3: Human Physiology</h3>
+            <span class="note-date">Updated: March 5, 2025</span>
+          </div>
+          <p class="note-content">
+            In-depth coverage of human organ systems including nervous, cardiovascular, respiratory, and digestive systems.
+            Includes anatomical diagrams and physiological processes.
+          </p>
+        </div>
+        
+        <div class="note-item">
+          <div class="note-title">
+            <h3>Chapter 4: Ecology and Evolution</h3>
+            <span class="note-date">Updated: February 28, 2025</span>
+          </div>
+          <p class="note-content">
+            Comprehensive notes on ecosystems, population dynamics, natural selection, and evolutionary processes.
+            Includes food webs, ecological succession, and speciation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ <!-- History Page -->
+<div id="history-page" class="subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <span>History</span>
+    </div>
+    <h2 class="section-title">History</h2>
+    <p>Please select a history subject:</p>
+    
+    <div class="sub-subjects-grid">
+      <div class="sub-subject-card" onclick="showSubSubject('world-history')">
+        <div class="sub-subject-header" style="background-color: #e67e22;">
+          <h3>World History</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Study of significant events and developments in human societies across the globe.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('national-history')">
+        <div class="sub-subject-header" style="background-color: #f39c12;">
+          <h3>National History</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>In-depth exploration of our nation's past, from its founding to modern times.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- World History Page -->
+<div id="world-history-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('history')">History</a>
+      <span class="path-separator">›</span>
+      <span>World History</span>
+    </div>
+    <h2 class="section-title">World History</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Ancient Civilizations</h3>
+          <span class="note-date">Updated: March 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive notes on early human civilizations including Mesopotamia, Egypt, Indus Valley, and Ancient China.
+          Includes timelines, cultural achievements, and political structures.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Classical Antiquity</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed study of Ancient Greece and Rome, their political systems, philosophies, and lasting cultural impact.
+          Includes key figures, major conflicts, and architectural achievements.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Middle Ages</h3>
+          <span class="note-date">Updated: March 7, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive coverage of feudalism, the Byzantine Empire, Islamic Golden Age, and medieval Europe.
+          Includes the Crusades, Black Death, and developments in art and architecture.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Modern Era</h3>
+          <span class="note-date">Updated: March 3, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth analysis of Industrial Revolution, World Wars, Cold War, and globalization.
+          Includes critical events, technological developments, and their impact on modern society.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- National History Page -->
+<div id="national-history-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('history')">History</a>
+      <span class="path-separator">›</span>
+      <span>National History</span>
+    </div>
+    <h2 class="section-title">National History</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Colonial Period</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive notes on early settlements, colonial society, and relations with indigenous peoples.
+          Includes primary source analysis and detailed timelines of key events.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Revolution and Independence</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed study of the path to independence, revolutionary war, and establishment of government.
+          Includes key figures, battles, and founding documents with analysis.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: 19th Century Development</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth coverage of territorial expansion, civil conflicts, industrialization, and social reform movements.
+          Includes maps, political cartoons, and economic data analysis.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: 20th Century to Present</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive analysis of world wars participation, economic development, civil rights movements, and recent history.
+          Includes photographs, speech excerpts, and historical interpretations.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- English Subject Selection Page -->
+<div id="english-page" class="subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <span>English</span>
+    </div>
+    <h2 class="section-title">English</h2>
+    <p>Please select an English subject:</p>
+    
+    <div class="sub-subjects-grid">
+      <div class="sub-subject-card" onclick="showSubSubject('literature')">
+        <div class="sub-subject-header" style="background-color: #9b59b6;">
+          <h3>Literature</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Study of classic and contemporary literary works, analysis, and interpretation.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('writing')">
+        <div class="sub-subject-header" style="background-color: #8e44ad;">
+          <h3>Writing Skills</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Comprehensive guide to essay writing, creative writing, and academic composition.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Literature Page -->
+<div id="literature-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('english')">English</a>
+      <span class="path-separator">›</span>
+      <span>Literature</span>
+    </div>
+    <h2 class="section-title">Literature</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Classical Literature</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive analysis of epic poems, Greek tragedies, and early narrative forms.
+          Includes character studies, themes, and historical context.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Shakespeare</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth study of selected plays and sonnets, covering themes, language devices, and character development.
+          Includes performance analysis and contemporary interpretations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: 19th Century Literature</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed examination of Romanticism, Victorian literature, and early modernism.
+          Includes key authors, social context, and literary movements.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Modern and Contemporary Literature</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive coverage of 20th and 21st century texts, including post-colonial literature and diverse voices.
+          Includes critical approaches and comparative analysis.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Writing Skills Page -->
+<div id="writing-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('english')">English</a>
+      <span class="path-separator">›</span>
+      <span>Writing Skills</span>
+    </div>
+    <h2 class="section-title">Writing Skills</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Essay Structure and Planning</h3>
+          <span class="note-date">Updated: March 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive guide to planning and structuring academic essays, including thesis statements, outlines, and arguments.
+          Includes sample essays with annotations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Analytical Writing</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed techniques for text analysis, critical thinking, and developing interpretations.
+          Includes paragraph structure and integrating evidence effectively.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Creative Writing</h3>
+          <span class="note-date">Updated: March 6, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth guide to narrative techniques, character development, dialogue, and descriptive writing.
+          Includes writing prompts and example passages with commentary.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Grammar and Style</h3>
+          <span class="note-date">Updated: March 2, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive coverage of grammar rules, sentence structure, punctuation, and developing a personal writing style.
+          Includes common errors and how to avoid them.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Computer Science Subject Selection Page -->
+<div id="computer-page" class="subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <span>Computer Science</span>
+    </div>
+    <h2 class="section-title">Computer Science</h2>
+    <p>Please select a computer science subject:</p>
+    
+    <div class="sub-subjects-grid">
+      <div class="sub-subject-card" onclick="showSubSubject('programming')">
+        <div class="sub-subject-header" style="background-color: #3498db;">
+          <h3>Programming</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Learn about algorithms, data structures, and programming languages.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('webdev')">
+        <div class="sub-subject-header" style="background-color: #2980b9;">
+          <h3>Web Development</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Study of front-end and back-end web technologies, frameworks, and best practices.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Programming Page -->
+<div id="programming-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('computer')">Computer Science</a>
+      <span class="path-separator">›</span>
+      <span>Programming</span>
+    </div>
+    <h2 class="section-title">Programming</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Introduction to Algorithms</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive overview of algorithm design, analysis, and efficiency.
+          Includes pseudocode examples and complexity analysis.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Data Structures</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed explanation of arrays, linked lists, stacks, queues, trees, and graphs.
+          Includes implementation examples and application scenarios.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Object-Oriented Programming</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth coverage of classes, objects, inheritance, polymorphism, and encapsulation.
+          Includes design patterns and practical examples.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Advanced Programming Concepts</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive guide to functional programming, multi-threading, memory management, and optimization techniques.
+          Includes code examples and best practices.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Web Development Page -->
+<div id="webdev-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('computer')">Computer Science</a>
+      <span class="path-separator">›</span>
+      <span>Web Development</span>
+    </div>
+    <h2 class="section-title">Web Development</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: HTML and CSS Fundamentals</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive guide to HTML5 elements, semantic markup, CSS selectors, and responsive design.
+          Includes examples and best practices for modern web development.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: JavaScript and DOM Manipulation</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed exploration of JavaScript syntax, functions, events, and DOM manipulation techniques.
+          Includes practical examples and interactive components.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Front-End Frameworks</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth coverage of popular frameworks like React, Vue, and Angular, including component architecture and state management.
+          Includes comparison of approaches and implementation examples.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Back-End Development and APIs</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive overview of server-side programming, databases, RESTful APIs, and authentication.
+          Includes architecture patterns and security considerations.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Art Subject Selection Page -->
+<div id="art-page" class="subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <span>Art & Design</span>
+    </div>
+    <h2 class="section-title">Art & Design</h2>
+    <p>Please select an art subject:</p>
+    
+    <div class="sub-subjects-grid">
+      <div class="sub-subject-card" onclick="showSubSubject('drawing')">
+        <div class="sub-subject-header" style="background-color: #e67e22;">
+          <h3>Drawing & Painting</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Fundamentals of visual art, techniques, and artistic expression.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('design')">
+        <div class="sub-subject-header" style="background-color: #d35400;">
+          <h3>Design Principles</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>Study of composition, color theory, typography, and visual communication.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Drawing & Painting Page -->
+<div id="drawing-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('art')">Art & Design</a>
+      <span class="path-separator">›</span>
+      <span>Drawing & Painting</span>
+    </div>
+    <h2 class="section-title">Drawing & Painting</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Drawing Fundamentals</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive guide to line, shape, form, perspective, and proportion.
+          Includes step-by-step exercises and technique demonstrations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Value and Shading</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed techniques for creating the illusion of light, volume, and texture through value.
+          Includes different shading methods and practical applications.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Color Theory and Application</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth study of color properties, mixing, harmonies, and emotional impact.
+          Includes color schemes and practical painting exercises.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Media and Techniques</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive coverage of various artistic media including pencil, charcoal, watercolor, acrylic, and oil.
+          Includes techniques specific to each medium and their applications.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Design Principles Page -->
+<div id="design-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('art')">Art & Design</a>
+      <span class="path-separator">›</span>
+      <span>Design Principles</span>
+    </div>
+    <h2 class="section-title">Design Principles</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Elements of Design</h3>
+          <span class="note-date">Updated: March 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive overview of line, shape, texture, space, color, and value in design.
+          Includes visual examples and analysis of successful designs.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Principles of Composition</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Detailed study of balance, contrast, emphasis, movement, pattern, rhythm, and unity in visual composition.
+          Includes case studies and practical applications.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Typography</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          In-depth coverage of font selection, hierarchy, readability, and expressive typography.
+          Includes historical context and contemporary usage.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Visual Communication</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Comprehensive guide to communicating ideas and information visually through graphics, layout, and imagery.
+          Includes audience considerations and effective messaging strategies.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Commerce Subject Selection Page -->
+<div id="commerce-page" class="subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <span>Commerce</span>
+    </div>
+    <h2 class="section-title">Commerce</h2>
+    <p>Please select a commerce subject:</p>
+    
+    <div class="sub-subjects-grid">
+      <div class="sub-subject-card" onclick="showSubSubject('business')">
+        <div class="sub-subject-header" style="background-color: #e67e22;">
+          <h3>Business</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>The study of organizations, management, and the marketplace in which businesses operate.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('economics')">
+        <div class="sub-subject-header" style="background-color: #16a085;">
+          <h3>Economics</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>The study of how societies allocate scarce resources to satisfy unlimited wants and needs.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+      
+      <div class="sub-subject-card" onclick="showSubSubject('accounting')">
+        <div class="sub-subject-header" style="background-color: #2c3e50;">
+          <h3>Accounting</h3>
+        </div>
+        <div class="sub-subject-content">
+          <p>The study of recording, classifying, and interpreting financial information for decision-making.</p>
+          <a href="#" class="view-notes">View Chapters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Business Page -->
+<div id="business-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('commerce')">Commerce</a>
+      <span class="path-separator">›</span>
+      <span>Business</span>
+    </div>
+    <h2 class="section-title">Business</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Introduction to Business</h3>
+          <span class="note-date">Updated: March 18, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore the fundamental concepts of business, including different types of organizations, business ownership structures, and the evolving business environment in a global marketplace.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Management and Leadership</h3>
+          <span class="note-date">Updated: March 16, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand the principles of effective management, leadership styles, organizational structure, and how managers plan, organize, lead, and control business operations to achieve organizational goals.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Marketing and Market Research</h3>
+          <span class="note-date">Updated: March 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn about marketing strategies, consumer behavior, market segmentation, and the marketing mix (product, price, place, promotion). Discover how businesses identify and satisfy customer needs.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Human Resource Management</h3>
+          <span class="note-date">Updated: March 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore how organizations recruit, select, train, and develop employees. Understand personnel management, performance evaluation, compensation, and employee relations in the modern workplace.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: Operations Management</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Discover how businesses manage production processes, supply chains, quality control, and inventory management to create products and services efficiently while meeting customer expectations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Business Ethics and Corporate Social Responsibility</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          Examine ethical principles in business decision-making, corporate social responsibility initiatives, sustainability practices, and how organizations balance profit motives with ethical obligations.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Entrepreneurship and Innovation</h3>
+          <span class="note-date">Updated: March 6, 2025</span>
+        </div>
+        <p class="note-content">
+          Study the entrepreneurial mindset, business startup processes, innovation strategies, and how entrepreneurs identify opportunities, secure resources, and overcome challenges in creating new ventures.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Business Communication</h3>
+          <span class="note-date">Updated: March 4, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn effective communication strategies in business contexts, including written, verbal, and digital communication. Understand how to deliver presentations, conduct meetings, and negotiate successfully.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 9: Strategic Management</h3>
+          <span class="note-date">Updated: March 2, 2025</span>
+        </div>
+        <p class="note-content">
+          Analyze how organizations develop and implement strategic plans, conduct SWOT analyses, establish competitive advantages, and adapt to changing business environments to achieve long-term success.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 10: International Business</h3>
+          <span class="note-date">Updated: February 28, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore the global business environment, international trade theories, foreign market entry strategies, cultural considerations, and how businesses operate across national boundaries.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 11: E-Commerce and Digital Business</h3>
+          <span class="note-date">Updated: February 25, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand online business models, digital marketing strategies, e-commerce platforms, and how technology is transforming traditional business operations, customer relationships, and market reach.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 12: Business Law and Regulation</h3>
+          <span class="note-date">Updated: February 22, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn about the legal environment of business, contract law, intellectual property protection, consumer rights, employment law, and regulatory compliance issues facing modern organizations.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Economics Page -->
+<div id="economics-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('commerce')">Commerce</a>
+      <span class="path-separator">›</span>
+      <span>Economics</span>
+    </div>
+    <h2 class="section-title">Economics</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Introduction to Economics</h3>
+          <span class="note-date">Updated: March 17, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand economic concepts, scarcity, opportunity cost, and production possibilities. Learn about different economic systems and the fundamental economic questions every society must answer.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Microeconomics: Supply and Demand</h3>
+          <span class="note-date">Updated: March 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Analyze how market forces determine prices and quantities in individual markets. Explore elasticity concepts, market equilibrium, and the effects of government interventions like price controls and taxes.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Consumer Theory and Behavior</h3>
+          <span class="note-date">Updated: March 11, 2025</span>
+        </div>
+        <p class="note-content">
+          Study how consumers make decisions to maximize utility within budget constraints. Learn about indifference curves, income and substitution effects, and consumer surplus concepts.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Theory of the Firm and Market Structure</h3>
+          <span class="note-date">Updated: March 8, 2025</span>
+        </div>
+        <p class="note-content">
+          Examine how firms make production decisions to maximize profit. Compare different market structures including perfect competition, monopoly, oligopoly, and monopolistic competition.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: Factor Markets and Income Distribution</h3>
+          <span class="note-date">Updated: March 5, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand how wages, rent, interest, and profit are determined. Explore labor markets, capital markets, and factors affecting income distribution and inequality in different economies.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Market Failures and Government Policy</h3>
+          <span class="note-date">Updated: March 2, 2025</span>
+        </div>
+        <p class="note-content">
+          Analyze externalities, public goods, information asymmetry, and other market failures. Evaluate government policies designed to address these issues, including regulation and Pigovian taxes.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Macroeconomics: National Income and Price Level</h3>
+          <span class="note-date">Updated: February 27, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn how to measure economic performance using GDP, unemployment, and inflation metrics. Understand the circular flow of income and aggregate supply and demand models.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Macroeconomic Policy and Growth</h3>
+          <span class="note-date">Updated: February 24, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore fiscal and monetary policies and their effects on the economy. Study economic growth theories, productivity factors, and policies that promote sustainable long-term growth.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 9: Money, Banking, and Financial Markets</h3>
+          <span class="note-date">Updated: February 21, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand the role of money, banking systems, central banks, and financial institutions. Learn about interest rate determination, money supply, and monetary policy implementation.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 10: International Trade and Finance</h3>
+          <span class="note-date">Updated: February 18, 2025</span>
+        </div>
+        <p class="note-content">
+          Examine comparative advantage, trade patterns, exchange rates, and international financial flows. Analyze trade policies, including tariffs, quotas, and trade agreements.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 11: Development Economics</h3>
+          <span class="note-date">Updated: February 15, 2025</span>
+        </div>
+        <p class="note-content">
+          Study economic development challenges facing emerging economies. Analyze poverty, inequality, human capital development, institutions, and policies that promote sustainable development.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 12: Contemporary Economic Issues</h3>
+          <span class="note-date">Updated: February 12, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore current economic challenges including environmental economics, the digital economy, income inequality, aging populations, and economic responses to global crises.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Accounting Page -->
+<div id="accounting-page" class="sub-subject-page">
+  <div class="container">
+    <div class="path-nav">
+      <a href="#" onclick="showExplore()">Explore</a>
+      <span class="path-separator">›</span>
+      <a href="#" onclick="showSubject('commerce')">Commerce</a>
+      <span class="path-separator">›</span>
+      <span>Accounting</span>
+    </div>
+    <h2 class="section-title">Accounting</h2>
+    <div class="notes-list">
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 1: Fundamentals of Accounting</h3>
+          <span class="note-date">Updated: March 16, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn the basic accounting concepts, principles, and assumptions. Understand the accounting equation, double-entry system, and the accounting cycle from journal entries to financial statements.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 2: Financial Statements</h3>
+          <span class="note-date">Updated: March 13, 2025</span>
+        </div>
+        <p class="note-content">
+          Master the preparation and interpretation of income statements, balance sheets, cash flow statements, and statements of changes in equity. Understand how these statements interrelate.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 3: Asset Accounting</h3>
+          <span class="note-date">Updated: March 10, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore accounting for different types of assets including cash, accounts receivable, inventory, investments, and property, plant, and equipment. Learn valuation methods and depreciation techniques.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 4: Liability and Equity Accounting</h3>
+          <span class="note-date">Updated: March 7, 2025</span>
+        </div>
+        <p class="note-content">
+          Study accounting for liabilities such as accounts payable, loans, bonds, and provisions. Learn about equity transactions including stock issuance, dividends, and retained earnings.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 5: Revenue and Expense Recognition</h3>
+          <span class="note-date">Updated: March 4, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand when and how to recognize revenues and expenses under accrual accounting. Learn about revenue recognition principles, matching concept, and adjusting entries.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 6: Financial Statement Analysis</h3>
+          <span class="note-date">Updated: March 1, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn techniques for analyzing financial statements including ratio analysis, horizontal and vertical analysis, and cash flow analysis to evaluate company performance and financial health.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 7: Cost Accounting</h3>
+          <span class="note-date">Updated: February 26, 2025</span>
+        </div>
+        <p class="note-content">
+          Study cost classifications, cost behavior, and cost-volume-profit analysis. Learn about job costing, process costing, and activity-based costing systems for management decision-making.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 8: Budgeting and Performance Evaluation</h3>
+          <span class="note-date">Updated: February 23, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore the preparation of master budgets, cash budgets, and flexible budgets. Learn about standard costing, variance analysis, and responsibility accounting for performance measurement.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 9: Management Decision Making</h3>
+          <span class="note-date">Updated: February 20, 2025</span>
+        </div>
+        <p class="note-content">
+          Apply accounting information for management decisions including product pricing, special orders, make-or-buy decisions, and capital investment analysis using payback and discounted cash flow methods.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 10: Taxation Principles</h3>
+          <span class="note-date">Updated: February 17, 2025</span>
+        </div>
+        <p class="note-content">
+          Understand basic principles of income tax accounting for individuals and businesses. Learn about tax calculations, deductions, credits, and the relationship between accounting and taxable income.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 11: Auditing and Assurance</h3>
+          <span class="note-date">Updated: February 14, 2025</span>
+        </div>
+        <p class="note-content">
+          Learn about the auditing process, professional ethics, internal controls, audit evidence, sampling techniques, and the preparation of audit reports and assurance statements.
+        </p>
+      </div>
+      
+      <div class="note-item">
+        <div class="note-title">
+          <h3>Chapter 12: Accounting Information Systems</h3>
+          <span class="note-date">Updated: February 11, 2025</span>
+        </div>
+        <p class="note-content">
+          Explore the role of information technology in modern accounting. Learn about accounting software, database concepts, system controls, data analytics, and emerging technologies in accounting.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2025 SchoolNotes Hub. All rights reserved.</p>
+  <p>A collaborative platform for students and teachers.</p>
+</footer>
+
+<script>
+  function showHome() {
+    document.getElementById("home-page").style.display = "block";
+    document.getElementById("explore-page").style.display = "none";
+    hideAllSubjectPages();
+    hideAllSubSubjectPages();
+  }
+  
+  function showExplore() {
+    document.getElementById("home-page").style.display = "none";
+    document.getElementById("explore-page").style.display = "block";
+    hideAllSubjectPages();
+    hideAllSubSubjectPages();
+  }
+  
+  function hideAllSubjectPages() {
+    const subjectPages = document.querySelectorAll('.subject-page');
+    subjectPages.forEach(page => {
+      page.classList.remove('active');
+    });
+  }
+  
+  function hideAllSubSubjectPages() {
+    const subSubjectPages = document.querySelectorAll('.sub-subject-page');
+    subSubjectPages.forEach(page => {
+      page.classList.remove('active');
+    });
+  }
+  
+  function showSubject(subject) {
+    document.getElementById("home-page").style.display = "none";
+    document.getElementById("explore-page").style.display = "none";
+    
+    hideAllSubjectPages();
+    hideAllSubSubjectPages();
+    
+    document.getElementById(subject + "-page").classList.add('active');
+  }
+  
+  function showSubSubject(subSubject) {
+    hideAllSubjectPages();
+    hideAllSubSubjectPages();
+    
+    document.getElementById(subSubject + "-page").classList.add('active');
+  }
+  
+  // Initialize with home page
+  showHome();
+</script>
+</body>
+</html>

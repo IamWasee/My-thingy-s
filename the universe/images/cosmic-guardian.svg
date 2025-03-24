@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Cosmic Guardian - Kaarisha's celestial protector -->
+  <defs>
+    <radialGradient id="guardianAura" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#FF8C00" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FF4500" stop-opacity="0.5"/>
+    </radialGradient>
+    <filter id="starlight" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="starlight"/>
+    </filter>
+  </defs>
+  
+  <!-- Glowing body/aura -->
+  <circle cx="100" cy="90" r="50" fill="url(#guardianAura)" opacity="0.8"/>
+  
+  <!-- Cosmic armor/form -->
+  <path d="M70 70 Q100 40 130 70 Q150 90 130 120 Q100 150 70 120 Q50 90 70 70Z" 
+        fill="none" stroke="#FFD700" stroke-width="2" opacity="0.9"/>
+  
+  <!-- Crown/cosmic symbol -->
+  <path d="M80 50 L100 30 L120 50" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <circle cx="100" cy="30" r="5" fill="#FFFFFF" filter="url(#starlight)"/>
+  
+  <!-- Kaarisha symbol -->
+  <text x="100" y="95" font-family="serif" font-size="10" fill="#FFFFFF" text-anchor="middle" filter="url(#starlight)">KAARISHA</text>
+  
+  <!-- Facial features (ethereal) -->
+  <circle cx="85" cy="75" r="3" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="115" cy="75" r="3" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Cosmic energy streams -->
+  <path d="M60 100 Q30 120 50 150" stroke="#FFD700" stroke-width="1.5" fill="none" opacity="0.7"/>
+  <path d="M140 100 Q170 120 150 150" stroke="#FFD700" stroke-width="1.5" fill="none" opacity="0.7"/>
+  
+  <!-- Star particles -->
+  <circle cx="70" cy="60" r="1.5" fill="#FFFFFF" filter="url(#starlight)"/>
+  <circle cx="130" cy="60" r="1.5" fill="#FFFFFF" filter="url(#starlight)"/>
+  <circle cx="80" cy="130" r="1" fill="#FFFFFF" filter="url(#starlight)"/>
+  <circle cx="120" cy="130" r="1" fill="#FFFFFF" filter="url(#starlight)"/>
+  <circle cx="60" cy="90" r="1" fill="#FFFFFF" filter="url(#starlight)"/>
+  <circle cx="140" cy="90" r="1" fill="#FFFFFF" filter="url(#starlight)"/>
+</svg>

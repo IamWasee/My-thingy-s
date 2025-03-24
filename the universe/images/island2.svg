@@ -1,0 +1,90 @@
+<svg width="250" height="180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for the island -->
+    <linearGradient id="islandGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9b7653" />
+      <stop offset="60%" stop-color="#7d5d41" />
+      <stop offset="100%" stop-color="#654321" />
+    </linearGradient>
+    
+    <linearGradient id="grassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b8e986" />
+      <stop offset="100%" stop-color="#7bb661" />
+    </linearGradient>
+    
+    <radialGradient id="flowerGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#ffb6c1" />
+      <stop offset="100%" stop-color="#ff69b4" />
+    </radialGradient>
+    
+    <!-- Glow effect for waterfall -->
+    <filter id="waterfallGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Island base -->
+  <path d="M 20,90 Q 40,70 80,80 T 150,70 Q 190,60 220,90 Q 230,120 210,140 Q 170,160 120,150 Q 70,160 40,140 Q 20,120 20,90 Z" 
+        fill="url(#islandGradient)" />
+  
+  <!-- Grass on top -->
+  <path d="M 30,90 Q 50,75 90,85 T 140,75 Q 180,65 210,90 Q 200,80 180,75 Q 140,65 120,70 Q 80,65 60,75 Q 40,80 30,90 Z" 
+        fill="url(#grassGradient)" />
+  
+  <!-- Small cottage -->
+  <g>
+    <!-- Cottage base -->
+    <rect x="100" y="80" width="40" height="25" fill="#d2b48c" />
+    
+    <!-- Cottage roof -->
+    <path d="M 95,80 L 120,60 L 145,80 Z" fill="#8b4513" />
+    
+    <!-- Cottage door -->
+    <rect x="115" y="90" width="10" height="15" fill="#654321" />
+    
+    <!-- Cottage window -->
+    <rect x="130" y="85" width="8" height="8" fill="#87ceeb" />
+  </g>
+  
+  <!-- Flower field -->
+  <g>
+    <!-- Flower 1 -->
+    <circle cx="60" cy="75" r="3" fill="url(#flowerGradient)" />
+    <circle cx="60" cy="75" r="1" fill="#ffff00" />
+    
+    <!-- Flower 2 -->
+    <circle cx="75" cy="80" r="3" fill="url(#flowerGradient)" />
+    <circle cx="75" cy="80" r="1" fill="#ffff00" />
+    
+    <!-- Flower 3 -->
+    <circle cx="170" cy="75" r="3" fill="url(#flowerGradient)" />
+    <circle cx="170" cy="75" r="1" fill="#ffff00" />
+    
+    <!-- Flower 4 -->
+    <circle cx="185" cy="80" r="3" fill="url(#flowerGradient)" />
+    <circle cx="185" cy="80" r="1" fill="#ffff00" />
+    
+    <!-- Flower 5 -->
+    <circle cx="160" cy="85" r="3" fill="url(#flowerGradient)" />
+    <circle cx="160" cy="85" r="1" fill="#ffff00" />
+  </g>
+  
+  <!-- Small waterfall -->
+  <path d="M 40,90 C 45,110 35,120 40,140" stroke="#add8e6" stroke-width="5" fill="none" opacity="0.7" filter="url(#waterfallGlow)">
+    <animate attributeName="d" 
+             values="M 40,90 C 45,110 35,120 40,140; M 40,90 C 42,110 38,120 40,140; M 40,90 C 45,110 35,120 40,140" 
+             dur="3s" 
+             repeatCount="indefinite" />
+  </path>
+  
+  <!-- Subtle animation for floating -->
+  <animateTransform 
+    attributeName="transform"
+    attributeType="XML"
+    type="translate"
+    values="0,0; 0,-4; 0,0"
+    dur="10s"
+    repeatCount="indefinite"
+    additive="sum" />
+</svg>

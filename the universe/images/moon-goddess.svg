@@ -1,0 +1,16 @@
+<svg width="130" height="160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for the moon goddess -->
+    <radialGradient id="goddessGlow" cx="50%" cy="40%" r="60%" fx="50%" fy="40%">
+      <stop offset="0%" stop-color="#fafafa" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#f5f5f5" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#eeeeee" stop-opacity="0.5"/>
+    </radialGradient>
+    
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#f5f5f5" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#e0e0e0" stop-opacity="0.5"/>
+    </radialGradient>
+    
+    <linearGradient id="dressGradient" x1="0%" y1="0%" x2="0
